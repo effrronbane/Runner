@@ -1,13 +1,16 @@
-class Runner extends Phaser.Scene {
-    constructor(scene, x, y, texture, frame, direction) {
+class Runner extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame)
         scene.add.existing(this)
         scene.physics.add.existing(this)
+        
 
         this.body.setSize(this.width/2, this.height)
         this.body.setCollideWorldBounds(true)
 
-        this.runVel = 150
+        this.runVel = 1
+
+        this.coll = false
 
         scene.runnerFSM = new StateMachine('run', {
             run: new RunState(),
@@ -18,20 +21,20 @@ class Runner extends Phaser.Scene {
 }
 
 
-class Runstate extends State {
+class RunState extends State {
     enter(scene, runner) {
-        runner.setVelocity(runVel)
-
-        //run anim
+        runner.anims.play('walkNor')
     }
 
     execute(scene, runner) {
-        const { up, down} = scene.keys
+        const { up, down } = scene.keys
 
 
         if(Phaser.Input.Keyboard.JustDown(up)) {
             this.stateMachine.transition('flipUp')
-            return
+            //if()
+                return
+            //}
         }
 
         if(Phaser.Input.Keyboard.JustDown(down)) {
@@ -43,8 +46,8 @@ class Runstate extends State {
 
 class FlipUpState extends State {
     execute(scene, runner) {
-        runner.setVelocity(50, 150)
-
+        runner.anims.play('FLUP', true)
+        runner.setVelocity(70, -250)
     }
 }
 
@@ -53,7 +56,7 @@ class FlipUpState extends State {
 
 class FlipDownState extends State {
     execute(scene, runner) {
-        runner.setVelocity(50, -150 )
-
+        runner.anims.play('FLDOWN', true)
+        runner.setVelocity(70, 250)
     }
 }
