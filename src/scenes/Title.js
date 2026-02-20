@@ -32,10 +32,9 @@ class Title extends Phaser.Scene {
     }
 
     create() {
-        let menuconfig = {
+        let textconfig = {
             fontFamily: 'KR',
             fontSize: '28px',
-            //color: '#007b36',
             padding: {
                 top: 5,
                 bottom: 5
@@ -76,8 +75,8 @@ class Title extends Phaser.Scene {
         this.add.image(width/2, height/3, 'logo').setScale(1.4)
 
         //start and how to play
-        this.add.text(width/2, height/1.5, 'Use ↑ and ↓ to FLIP gravity, survive.', menuconfig).setOrigin(0.5)
-        this.add.text(width/2, height/1.3, 'Press ENTER to START', menuconfig).setOrigin(0.5)
+        this.add.text(width/2, height/1.5, 'Use ↑ and ↓ to FLIP gravity, survive.', textconfig).setOrigin(0.5)
+        this.add.text(width/2, height/1.3, 'Press ENTER to START', textconfig).setOrigin(0.5)
 
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
         

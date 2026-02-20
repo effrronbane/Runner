@@ -10,6 +10,7 @@ class Run extends Phaser.Scene {
 
         //controls
         this.keys = this.input.keyboard.createCursorKeys()
+        keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
 
         
 
@@ -28,10 +29,11 @@ class Run extends Phaser.Scene {
         }
         
         this.player = new Runner(this, width/2, height/2, 'Wnor', 0)
-        this.physics.add.collider(this.player, this.botGround, () => sets())
-        function sets() {
-            this.runnerFSM.setState('invrun')
-        }
+        
+        this.physics.add.collider(this.player, this.topGround)
+        this.physics.add.collider(this.player, this.botGround)
+        
+        
 
         this.time.addEvent ({
             delay: 2500,
@@ -42,18 +44,42 @@ class Run extends Phaser.Scene {
 
         function spawn() {
             const obj = ['SP', 'wallSP']
-        const test = Phaser.Math.RND.pick(obj)
-        const hei = Phaser.Math.RND.between(tileSize, this.cameras.main.height - tileSize)
-        new Evil(this, width, hei, test)
+            const sen = Phaser.Math.RND.pick(obj)
+            const hei = Phaser.Math.RND.between(tileSize, this.cameras.main.height - tileSize)
+            this.spike = new Evil(this, width, hei, sen)
         }
     }
 
     update() {
         this.back.tilePositionX -= 3.5
         this.runnerFSM.step()
+        if (this.player.body.blocked.up) {
+            this.runnerFSM.setState("invrun")
+        }
+        if (this.player.body.blocked.down) {
+            this.runnerFSM.setState("run")
+        }
+        if(this.over && Phaser.Input.Keyboard.JustDown(keyRESET)) {
+            this.scene.restart()
+        }
         
         
 
+    }
+
+    end() {
+        if(this.over) return
+        this.over = false
+        let textconfig = {
+            fontFamily: 'KR',
+            fontSize: '28px',
+            padding: {
+                top: 5,
+                bottom: 5
+            }
+        }
+
+        //add text for game over
     }
 
 }

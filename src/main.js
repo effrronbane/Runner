@@ -18,6 +18,6 @@ let config = {
 }
 
 const game = new Phaser.Game(config)
-const tileSize = 35
-let keyENTER, keyUp, keyDOWN
+const tileSize = 32
+let keyENTER, keyUp, keyDOWN, keyRESET
 let {width, height} = game.config
