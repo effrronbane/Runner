@@ -4,11 +4,14 @@ class Run extends Phaser.Scene {
     }
 
     create() {
-        //add music, background, and runner
+        //add music, 
+        this.back = this.add.tileSprite(width/2,height/2, 0, 0, 'BG')
         this.over = false
 
         //controls
         this.keys = this.input.keyboard.createCursorKeys()
+
+        
 
         this.botGround = this.add.group() 
         for(let i = 0; i < width; i += tileSize) {
@@ -25,14 +28,34 @@ class Run extends Phaser.Scene {
         }
         
         this.player = new Runner(this, width/2, height/2, 'Wnor', 0)
+        this.physics.add.collider(this.player, this.botGround, () => sets())
+        function sets() {
+            this.runnerFSM.setState('invrun')
+        }
 
-        this.physics.add.collider(this.player, this.botGround)
-        this.physics.add.collider(this.player, this.topGround)
+        this.time.addEvent ({
+            delay: 2500,
+            callback: spawn,
+            callbackScope: this,
+            loop: true
+        })
 
+        function spawn() {
+            const obj = ['SP', 'wallSP']
+        const test = Phaser.Math.RND.pick(obj)
+        const hei = Phaser.Math.RND.between(tileSize, this.cameras.main.height - tileSize)
+        new Evil(this, width, hei, test)
+        }
     }
 
     update() {
+        this.back.tilePositionX -= 3.5
         this.runnerFSM.step()
+        
+        
 
     }
+
 }
+
+

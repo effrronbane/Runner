@@ -10,7 +10,6 @@ class Runner extends Phaser.Physics.Arcade.Sprite {
 
         this.runVel = 1
 
-        this.coll = false
 
         scene.runnerFSM = new StateMachine('run', {
             run: new RunState(),
@@ -25,6 +24,7 @@ class Runner extends Phaser.Physics.Arcade.Sprite {
 class RunState extends State {
     enter(scene, runner) {
         runner.anims.play('walkNor')
+        //set vel
     }
 
     execute(scene, runner) {
@@ -33,9 +33,7 @@ class RunState extends State {
 
         if(Phaser.Input.Keyboard.JustDown(up)) {
             this.stateMachine.transition('flipUp')
-            //if()
-                return
-            //}
+            return 
         }
     }
 }
@@ -54,11 +52,12 @@ class invRunState extends State {
 }
 
 class FlipUpState extends State {
-    execute(scene, runner) {
+    enter(scene, runner) {
         runner.anims.play('FLUP', true)
         runner.setVelocity(70, -250)
 
         //go to inv walk
+        
 
 
     }
@@ -68,7 +67,7 @@ class FlipUpState extends State {
 //add a time to stop and return
 
 class FlipDownState extends State {
-    execute(scene, runner) {
+    enter(scene, runner) {
         runner.anims.play('FLDOWN', true)
         runner.setVelocity(70, 250)
 
