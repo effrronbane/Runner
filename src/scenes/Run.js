@@ -8,8 +8,13 @@ class Run extends Phaser.Scene {
         let theme = this.sound.add('KRM')
         theme.play({
             loop:true,
-            volume: 1
+            volume: .5
         })
+
+        //sound effects
+        this.cl = this.sound.add('click')
+        this.running = this.sound.add('RN')
+
         //city backdrop and game over flag
         this.back = this.add.tileSprite(width/2,height/2, 0, 0, 'BG')
         this.over = false
@@ -18,8 +23,6 @@ class Run extends Phaser.Scene {
         this.keys = this.input.keyboard.createCursorKeys()
         keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R)
         
-
-        
         //ground
         this.botGround = this.add.group() 
         for(let i = 0; i < width; i += tileSize) {
@@ -27,6 +30,7 @@ class Run extends Phaser.Scene {
             groundtile.body.immovable = true
             this.botGround.add(groundtile)
         }
+
         //ceiling
         this.topGround = this.add.group() 
         for(let i = 0; i < width; i += tileSize) {
@@ -34,6 +38,7 @@ class Run extends Phaser.Scene {
             groundtile.body.immovable = true
             this.topGround.add(groundtile)
         }
+        
         //player char
         this.player = new Runner(this, -width, height-65, 'Wnor', 0)
 
@@ -68,6 +73,7 @@ class Run extends Phaser.Scene {
 
         //checks for player over spikes and gameover
         this.physics.add.overlap(this.player, this.spikes, () => this.end())
+
         //timer
         this.startT = this.time.now
         
@@ -80,20 +86,25 @@ class Run extends Phaser.Scene {
 
         //checks if player is on the ground or ceiling and sets state machine 
         if (this.player.body.blocked.up) {
+            this.running.play()
             this.runnerFSM.setState("invrun")
         }
         if (this.player.body.blocked.down) {
+            this.running.play()
             this.runnerFSM.setState("run")
         }
 
         //checks game over flag to restart the game
         if(this.over && Phaser.Input.Keyboard.JustDown(keyRESET)) {
+            this.cl.play()
             this.scene.restart()
         }
     }
+
     //game over function
     end() {
         //set player away from screen and no more up or down inputs
+        this.sound.get('KRM').stop()
         this.sound.stopAll() 
         this.player.setCollideWorldBounds(false)
         this.player.setPosition(-100000000, -100000000000)

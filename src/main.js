@@ -1,7 +1,7 @@
 //Name:Gustavo
 //Title:Flip-AID
-//Hours:
-//Twist:
+//Hours: 16
+//Twist: Flip the char from the top and bottom to avoid object
 
 let config = {
     type: Phaser.AUTO,

@@ -6,6 +6,8 @@ class Title extends Phaser.Scene {
     preload() {
         this.load.font('KR', './assets/KRfont.ttf')
         this.load.path = './assets/'
+        this.load.audio('RN', 'carrun.mp3')
+        this.load.audio('click', 'click.mp3')
         this.load.audio('KRM', 'JUSTICE.mp3')
         this.load.image('BG', 'BG.PNG')
         this.load.image('SP', 'spike-1.png')
@@ -33,6 +35,7 @@ class Title extends Phaser.Scene {
     }
 
     create() {
+        this.cl = this.sound.add('click')
         let textconfig = {
             fontFamily: 'KR',
             fontSize: '28px',
@@ -78,7 +81,7 @@ class Title extends Phaser.Scene {
         //start and how to play
         this.add.text(width/2, height/1.5, 'Use ↑ and ↓ to FLIP gravity, survive.', textconfig).setOrigin(0.5)
         this.add.text(width/2, height/1.3, 'Press ENTER to START', textconfig).setOrigin(0.5)
-        this.add.text(width/2, height/1.1, 'Press ESC for credits', textconfig).setOrigin(0.5)
+        this.add.text(width/2, height/1.15, 'Press ESC for credits', textconfig).setOrigin(0.5)
 
         keyENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER)
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
@@ -89,10 +92,12 @@ class Title extends Phaser.Scene {
     update() {
         //start game
         if(Phaser.Input.Keyboard.JustDown(keyENTER)) {
+            this.cl.play()
             this.scene.start('runScene')
         }
         //go to credits 
         if(Phaser.Input.Keyboard.JustDown(keyESC)) {
+            this.cl.play()
             this.scene.start('creditsScene')
         }
     }

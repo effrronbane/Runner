@@ -13,6 +13,7 @@ class Runner extends Phaser.Physics.Arcade.Sprite {
             flipUp: new FlipUpState(),
             flipDown: new FlipDownState()
         }, [scene, this])
+
     }
 }
 
@@ -20,7 +21,7 @@ class Runner extends Phaser.Physics.Arcade.Sprite {
 class RunState extends State {
     enter(scene, runner) {
         runner.anims.play('walkNor')
-        //set vel
+        runner.setVelocity(0)
     }
 
     execute(scene, runner) {
@@ -36,6 +37,7 @@ class RunState extends State {
 class invRunState extends State {
     enter(scene, runner) {
         runner.anims.play('walkInv')
+        runner.setVelocity(0)
     }
 
     execute(scene, runner) {
@@ -51,7 +53,8 @@ class invRunState extends State {
 class FlipUpState extends State {
     enter(scene, runner) {
         runner.anims.play('FLUP', true)
-        runner.setVelocity(70, -250)
+        runner.setVelocity(10, -400)
+        
     }
 }
 //add a time to stop and return
@@ -59,6 +62,6 @@ class FlipUpState extends State {
 class FlipDownState extends State {
     enter(scene, runner) {
         runner.anims.play('FLDOWN', true)
-        runner.setVelocity(70, 250)
+        runner.setVelocity(10, 400)
     }
 }
