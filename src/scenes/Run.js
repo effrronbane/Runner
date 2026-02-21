@@ -75,11 +75,11 @@ class Run extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.spikes, () => this.end())
 
         //timer
-        this.startT = this.time.now
+        this.startT = performance.now()
         
     }
 
-    update() {
+    update(time, delta) {
         //move the backdrop and moves the state machine 
         this.back.tilePositionX -= 3.5
         this.runnerFSM.step()
@@ -122,8 +122,9 @@ class Run extends Phaser.Scene {
                 bottom: 5
             }
         }
+
         //time
-        let final = ((this.time.now - this.startT )/1000).toFixed(1)
+        let final = ((performance.now() - this.startT )/1000).toFixed(1)
 
         //add text for game over
         const top = this.add.text(width/2, height/1.5, `You survived for ${final} seconds`, textconfig).setOrigin(0.5)
