@@ -12,7 +12,7 @@ class Title extends Phaser.Scene {
         this.load.image('BG', 'BG.PNG')
         this.load.image('SP', 'spike-1.png')
         this.load.image('wallSP', 'wallspike.png')
-        this.load.image('logo', 'logo.png')
+        this.load.image('logo', 'logo.PNG')
         this.load.image('GR', 'EX-GR.png')
         this.load.spritesheet('Wnor', 'Wnor.png', {
             frameWidth: 64,
